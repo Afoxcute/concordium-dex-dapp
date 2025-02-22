@@ -1,0 +1,37 @@
+[
+    {
+        "type": "AttributeInSet",
+        "attributeTag": "countryOfResidence",
+        "set": [
+            "AT",
+            "BE",
+            "BG",
+            "CY",
+            "CZ",
+            "DK",
+            "EE",
+            "FI",
+            "FR",
+            "DE",
+            "GR",
+            "HU",
+            "IE",
+            "IT",
+            "LV",
+            "LT",
+            "LU",
+            "MT",
+            "NL",
+            "PL",
+            "PT",
+            "RO",
+            "SK",
+            "SI",
+            "ES",
+            "SE",
+            "NG",
+            "HR"
+        ]
+    },
+    { "type": "AttributeInRange", "attributeTag": "dob", "lower": "18000101", "upper": "20091212" }
+]

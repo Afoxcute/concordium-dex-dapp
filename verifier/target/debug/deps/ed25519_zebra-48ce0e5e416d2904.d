@@ -1,0 +1,10 @@
+/home/afolabi/concordium-dapp-examples/gallery/verifier/target/debug/deps/libed25519_zebra-48ce0e5e416d2904.rmeta: /home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/lib.rs /home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/batch.rs /home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/error.rs /home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/signing_key.rs /home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/verification_key.rs /home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/../README.md
+
+/home/afolabi/concordium-dapp-examples/gallery/verifier/target/debug/deps/ed25519_zebra-48ce0e5e416d2904.d: /home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/lib.rs /home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/batch.rs /home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/error.rs /home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/signing_key.rs /home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/verification_key.rs /home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/../README.md
+
+/home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/lib.rs:
+/home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/batch.rs:
+/home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/error.rs:
+/home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/signing_key.rs:
+/home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/verification_key.rs:
+/home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/ed25519-zebra-4.0.3/src/../README.md:

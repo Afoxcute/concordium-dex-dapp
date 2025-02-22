@@ -1,0 +1,7 @@
+/home/afolabi/concordium-dapp-examples/gallery/verifier/target/release/deps/want-2bba696d89b40216.rmeta: /home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/want-0.3.0/src/lib.rs
+
+/home/afolabi/concordium-dapp-examples/gallery/verifier/target/release/deps/libwant-2bba696d89b40216.rlib: /home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/want-0.3.0/src/lib.rs
+
+/home/afolabi/concordium-dapp-examples/gallery/verifier/target/release/deps/want-2bba696d89b40216.d: /home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/want-0.3.0/src/lib.rs
+
+/home/afolabi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/want-0.3.0/src/lib.rs:

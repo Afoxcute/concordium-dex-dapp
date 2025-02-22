@@ -1,0 +1,2 @@
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=/home/afolabi/concordium-dapp-examples/gallery/verifier/target/release/build/typenum-d5340bdad00dbcff/out/consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=/home/afolabi/concordium-dapp-examples/gallery/verifier/target/release/build/typenum-d5340bdad00dbcff/out/op.rs

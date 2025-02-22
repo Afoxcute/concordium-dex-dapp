@@ -1,0 +1,253 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+.restricted-media {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding-top: 20px;
+}
+
+.connection-banner,
+.main-window,
+.info-box {
+    border: 1px solid #308274;
+    border-radius: 10px;
+    background: black;
+}
+.connection-banner,
+.main-window {
+    width: 80%;
+    max-width: 1200px;
+}
+
+.connection-banner {
+    padding: 0 10px;
+    margin: 10px 0;
+    text-align: center;
+    word-break: break-all;
+}
+
+.connection-banner > h3 {
+    margin: 5px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.item {
+    border: 1px solid #308274;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
+
+.item-name {
+    word-break: break-all;
+    padding: 10px;
+}
+
+.restricted-image {
+    max-height: 200px;
+    max-width: 150px;
+}
+.placeholder {
+    height: 200px;
+    width: 150px;
+    background: white;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-window {
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 162px);
+    justify-content: center;
+    padding: 10px;
+    flex-grow: 1;
+    margin-bottom: auto;
+}
+
+.connect-button {
+    color: white;
+    border-radius: 10px;
+    margin: 7px 0px 7px 0px;
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #26685d;
+    background-color: #308274;
+    cursor: pointer;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    font-style: italic;
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.link {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    color: #308274;
+    text-decoration: underline;
+    cursor: pointer;
+    overflow-wrap: anywhere;
+}
+
+.dex-container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #308274;
+    border-radius: 10px;
+    background: black;
+}
+
+.dex-section {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #308274;
+    border-radius: 5px;
+}
+
+.pools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.pool-card {
+    padding: 15px;
+    border: 1px solid #308274;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.pool-card:hover {
+    background-color: #308274;
+}
+
+.dex-container input {
+    background: #1a1a1a;
+    border: 1px solid #308274;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+    margin: 5px 0;
+    width: 200px;
+}
+
+.dex-container label {
+    margin-right: 10px;
+}
+
+.nav-tabs {
+    display: flex;
+    gap: 10px;
+    width: 80%;
+    max-width: 1200px;
+    margin: 20px 0;
+    justify-content: center;
+    z-index: 1;
+}
+
+.nav-tab {
+    padding: 10px 20px;
+    border: 1px solid #308274;
+    background: black;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    text-align: center;
+}
+
+.nav-tab:hover {
+    background: #308274;
+}
+
+.nav-tab.active {
+    background: #308274;
+    font-weight: bold;
+}
+
+.dex-verification {
+    width: 80%;
+    max-width: 600px;
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #308274;
+    border-radius: 10px;
+    background: black;
+}
+
+.verification-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-group input {
+    padding: 8px;
+    border: 1px solid #308274;
+    border-radius: 5px;
+    background: #1a1a1a;
+    color: white;
+}
+
+.verification-error {
+    color: #ff4444;
+    padding: 10px;
+    border: 1px solid #ff4444;
+    border-radius: 5px;
+    background: rgba(255, 68, 68, 0.1);
+}
+
+.verification-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.connect-button.cancel {
+    background-color: #444;
+    border-color: #333;
+}
+
+.connect-button.cancel:hover {
+    background-color: #555;
+}
