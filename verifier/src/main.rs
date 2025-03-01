@@ -55,7 +55,7 @@ struct IdVerifierConfig {
     statement: String,
     #[clap(
         long = "names",
-        help = "Names of the pieces in the gallery. Should be a JSON list of strings"
+        help = "Names of the pieces in the dex. Should be a JSON list of strings"
     )]
     names: String,
     #[structopt(
@@ -141,7 +141,7 @@ async fn main() -> anyhow::Result<()> {
         .and(warp::path!("api" / "statement"))
         .map(move || warp::reply::json(&app.statement));
 
-    // 1c. get names of gallery items
+    // 1c. get names of dex items
     let get_names = warp::get()
         .and(warp::path!("api" / "names"))
         .map(move || warp::reply::json(&app.names));
