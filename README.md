@@ -35,7 +35,7 @@ To have hot-reload on the front-end (useful for development), run `yarn watch` i
 The dockerfile must be run from the project's root folder, ex:
 
 ```
-docker build -t dex -f dex/Dockerfile .
+docker build -t dex -f concordium-dex-dapp/Dockerfile .
 ```
 
 The image can then be run with:

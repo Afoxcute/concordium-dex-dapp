@@ -78,7 +78,7 @@ The project is a pure Rust project, and can be build by running
 cargo build --release
 ```
 
-This produces a single binary `target/release/gallery-verifier`.
+This produces a single binary `target/release/dex-verifier`.
 
 ## TODO
 

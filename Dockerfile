@@ -4,12 +4,12 @@ ARG rust_base_image=rust:1.73
 FROM ${node_base_image} AS node_build
 
 WORKDIR /app
-COPY ./dex/package.json ./package.json
-COPY ./dex/yarn.lock ./yarn.lock
-COPY ./dex/tsconfig.json ./tsconfig.json
-COPY ./dex/esbuild.config.ts ./
-COPY ./dex/types ./types
-COPY ./dex/src ./src
+COPY ./concordium-dex-dapp/package.json ./package.json
+COPY ./concordium-dex-dapp/yarn.lock ./yarn.lock
+COPY ./concordium-dex-dapp/tsconfig.json ./tsconfig.json
+COPY ./concordium-dex-dapp/esbuild.config.ts ./
+COPY ./concordium-dex-dapp/types ./types
+COPY ./concordium-dex-dapp/src ./src
 
 RUN yarn && yarn cache clean
 RUN yarn build
@@ -17,9 +17,9 @@ RUN yarn build
 FROM ${rust_base_image} AS rust_build
 WORKDIR /verifier
 COPY ./deps/concordium-rust-sdk /deps/concordium-rust-sdk
-COPY ./dex/verifier/src ./src
-COPY ./dex/verifier/Cargo.lock ./Cargo.lock
-COPY ./dex/verifier/Cargo.toml ./Cargo.toml
+COPY ./concordium-dex-dapp/verifier/src ./src
+COPY ./concordium-dex-dapp/verifier/Cargo.lock ./Cargo.lock
+COPY ./concordium-dex-dapp/verifier/Cargo.toml ./Cargo.toml
 
 RUN cargo build --release
 
