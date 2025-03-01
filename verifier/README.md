@@ -1,6 +1,6 @@
 # The DEX verifier
 
-This page describes the id verifier backend for the Dex dapp example. It ensures that only users that are able to verify themselves using the prove endpoint, using a challenge gotten from the challenge endpoint can access item images from the image endpoint.
+This page describes the id verifier backend for the Dex dapp example. It ensures that only users that are able to verify themselves using the prove endpoint, using a challenge gotten from the challenge endpoint.
 
 # Supported configuration options
 
