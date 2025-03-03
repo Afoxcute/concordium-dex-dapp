@@ -12,13 +12,14 @@ COPY yarn.lock ./yarn.lock
 COPY tsconfig.json ./tsconfig.json
 COPY esbuild.config.ts ./
 COPY src ./src
-COPY assets ./assets  # Explicitly copy the assets directory
+# Copy assets directory
+COPY assets ./assets
 
 # Install dependencies and build frontend
 RUN yarn && yarn cache clean
 RUN yarn build
-# Ensure assets are copied to public directory
-RUN mkdir -p public/assets && cp -r assets/* public/assets/
+# Ensure assets are in public directory
+RUN mkdir -p public/assets && cp -r assets/* public/assets/ || true
 
 # Rust build stage
 FROM ${rust_base_image} AS rust_build
@@ -72,7 +73,8 @@ ENV SSL_CERT_DIR=/etc/ssl/certs
 COPY --from=rust_build /build/dex-verifier ./dex-verifier
 COPY --from=rust_build /build/verifier/config ./config
 COPY --from=node_build /app/public ./public
-COPY --from=node_build /app/assets ./public/assets  # Ensure assets are copied to public directory
+# Copy assets to ensure they're available
+COPY --from=node_build /app/assets ./public/assets
 COPY --from=node_build /app/package.json ./
 COPY --from=node_build /app/yarn.lock ./
 
