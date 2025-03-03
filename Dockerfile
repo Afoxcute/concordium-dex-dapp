@@ -1,6 +1,7 @@
 ARG node_base_image=node:20-slim
 ARG rust_base_image=rust:1.73
 
+# Node.js build stage
 FROM ${node_base_image} AS node_build
 
 WORKDIR /app
@@ -10,31 +11,33 @@ COPY tsconfig.json ./tsconfig.json
 COPY esbuild.config.ts ./
 COPY src ./src
 
+# Install dependencies and build frontend
 RUN yarn && yarn cache clean
 RUN yarn build
 
+# Rust build stage
 FROM ${rust_base_image} AS rust_build
-WORKDIR /verifier
-COPY ../deps/concordium-rust-sdk /deps/concordium-rust-sdk
-COPY verifier/src ./src
-COPY verifier/Cargo.lock ./Cargo.lock
-COPY verifier/Cargo.toml ./Cargo.toml
-COPY verifier/config ./config
+WORKDIR /build
 
-RUN sed -i 's|../../deps/concordium-rust-sdk/|/deps/concordium-rust-sdk/|g' Cargo.toml
-RUN cargo build --release
+# Copy the entire project for proper rust building
+COPY . .
 
+# Build the verifier using yarn build-verifier (as specified in README)
+RUN cd verifier && \
+    cargo build --release
+
+# Final stage
 FROM ${node_base_image}
 WORKDIR /app
 
 # Set default environment variables
-ENV PORT=20000
+ENV PORT=8100
 ENV NODE=https://grpc.testnet.concordium.com:20000
 ENV LOG_LEVEL=info
 
 # Copy necessary files from build stages
-COPY --from=rust_build /verifier/target/release/dex-verifier ./dex-verifier
-COPY --from=rust_build /verifier/config ./config
+COPY --from=rust_build /build/verifier/target/release/dex-verifier ./dex-verifier
+COPY --from=rust_build /build/verifier/config ./config
 COPY --from=node_build /app/public ./public
 COPY --from=node_build /app/package.json ./
 COPY --from=node_build /app/yarn.lock ./
@@ -42,13 +45,20 @@ COPY --from=node_build /app/yarn.lock ./
 # Install production dependencies only
 RUN yarn install --production && yarn cache clean
 
-# Create an entrypoint script to handle environment variable expansion and file reading
+# Make sure the verifier is executable
+RUN chmod +x ./dex-verifier
+
+# Create an entrypoint script that matches the README's run command
 RUN echo '#!/bin/bash\n\
 exec yarn start \
   --statement "$(cat config/statement.json)" \
   --names "$(cat config/names.json)" \
-  --node "$NODE"' > /app/entrypoint.sh && \
+  --node "$NODE" \
+  --port "$PORT"' > /app/entrypoint.sh && \
   chmod +x /app/entrypoint.sh
+
+# Expose the correct port as mentioned in README
+EXPOSE 8100
 
 # Use the entrypoint script
 ENTRYPOINT ["/app/entrypoint.sh"]
