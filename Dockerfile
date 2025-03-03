@@ -27,7 +27,7 @@ FROM ubuntu:22.04
 WORKDIR /build
 
 ENV PORT=20000
-ENV NODE=http://node.testnet.concordium.com
+ENV NODE=http://grpc.testnet.concordium.com
 ENV LOG_LEVEL=info
 ENV STATEMENT='[{"type":"AttributeInSet","attributeTag":"idDocIssuer","set":["AT","BE","BG","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE","HR"]},{"type":"AttributeInRange","attributeTag":"dob","lower":"18000101","upper":"20070627"}]'
 ENV NAMES='["I Scream", "Starry Night", "Tranquility", "Quiet", "Storm", "Timeless", "Endless Rain"]'
