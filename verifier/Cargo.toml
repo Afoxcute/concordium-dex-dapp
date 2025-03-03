@@ -20,4 +20,4 @@ chrono = "0.4.19"
 thiserror = "1"
 rand = "0.8"
 uuid = { version = "1.2.2", features = ["v4", "serde"] }
-concordium-rust-sdk= { version = "6.0.0", path = "../../deps/concordium-rust-sdk" }
+concordium-rust-sdk = { version = "6.0.0", git = "https://github.com/Concordium/concordium-rust-sdk.git", tag = "6.0.0" }
