@@ -29,6 +29,7 @@ COPY verifier /build/verifier
 WORKDIR /build/verifier
 RUN sed -i 's|../../deps/concordium-rust-sdk/|/build/deps/concordium-rust-sdk/|g' Cargo.toml
 #RUN cargo build --release
+RUN yarn build-verifier
 
 # Final stage
 FROM ${node_base_image}
