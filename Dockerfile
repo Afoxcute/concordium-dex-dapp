@@ -19,33 +19,36 @@ COPY ../deps/concordium-rust-sdk /deps/concordium-rust-sdk
 COPY verifier/src ./src
 COPY verifier/Cargo.lock ./Cargo.lock
 COPY verifier/Cargo.toml ./Cargo.toml
+COPY verifier/config ./config
 
 RUN sed -i 's|../../deps/concordium-rust-sdk/|/deps/concordium-rust-sdk/|g' Cargo.toml
 RUN cargo build --release
 
-FROM ubuntu:22.04
-WORKDIR /build
+FROM ${node_base_image}
+WORKDIR /app
 
+# Set default environment variables
 ENV PORT=20000
-ENV NODE=http://grpc.testnet.concordium.com
+ENV NODE=https://grpc.testnet.concordium.com:20000
 ENV LOG_LEVEL=info
-ENV STATEMENT='[{"type":"AttributeInSet","attributeTag":"idDocIssuer","set":["AT","BE","BG","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE","HR"]},{"type":"AttributeInRange","attributeTag":"dob","lower":"18000101","upper":"20070627"}]'
-ENV NAMES='["I Scream", "Starry Night", "Tranquility", "Quiet", "Storm", "Timeless", "Endless Rain"]'
 
-COPY --from=rust_build /verifier/target/release/dex-verifier ./main
+# Copy necessary files from build stages
+COPY --from=rust_build /verifier/target/release/dex-verifier ./dex-verifier
+COPY --from=rust_build /verifier/config ./config
 COPY --from=node_build /app/public ./public
-RUN chmod +x ./main
+COPY --from=node_build /app/package.json ./
+COPY --from=node_build /app/yarn.lock ./
 
-# Create an entrypoint script to handle environment variable expansion
+# Install production dependencies only
+RUN yarn install --production && yarn cache clean
+
+# Create an entrypoint script to handle environment variable expansion and file reading
 RUN echo '#!/bin/bash\n\
-exec ./main \
-  --node "$NODE" \
-  --port "$PORT" \
-  --log-level "$LOG_LEVEL" \
-  --statement "$STATEMENT" \
-  --names "$NAMES" \
-  --public-folder public' > /build/entrypoint.sh && \
-  chmod +x /build/entrypoint.sh
+exec yarn start \
+  --statement "$(cat config/statement.json)" \
+  --names "$(cat config/names.json)" \
+  --node "$NODE"' > /app/entrypoint.sh && \
+  chmod +x /app/entrypoint.sh
 
-# Use the entrypoint script instead of direct CMD
-ENTRYPOINT ["/build/entrypoint.sh"]
+# Use the entrypoint script
+ENTRYPOINT ["/app/entrypoint.sh"]
