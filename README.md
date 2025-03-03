@@ -6,7 +6,7 @@ The webpage will only display the DEX if the user has provided a proof for the s
 The backend for this demo can be found in the [verifier](./verifier/) folder:
 
 ## Hosted front end
-A
+
 [Hosted front end link testnet]()
 
 ## Prerequisites
