@@ -36,8 +36,10 @@ RUN apt-get update && \
 COPY package.json yarn.lock ./
 COPY verifier ./verifier
 
-# No need for sed command since we're using absolute path in Cargo.toml now
-RUN yarn build-verifier
+# Build the verifier
+WORKDIR /build/verifier
+RUN cargo build --release
+RUN mkdir -p target/release && cp target/release/dex-verifier /build/dex-verifier
 
 # Final stage
 FROM ${node_base_image}
@@ -49,11 +51,11 @@ ENV NODE=https://grpc.testnet.concordium.com:20000
 ENV LOG_LEVEL=info
 
 # Copy necessary files from build stages
-COPY --from=rust_build /build/verifier/target/release/dex-verifier ./dex-verifier
+COPY --from=rust_build /build/dex-verifier ./dex-verifier
 COPY --from=rust_build /build/verifier/config ./config
 COPY --from=node_build /app/public ./public
-COPY --from=node_build /app/package.json ./
-COPY --from=node_build /app/yarn.lock ./
+COPY --from=node_build /app/package.json ./package.json
+COPY --from=node_build /app/yarn.lock ./yarn.lock
 
 # Install production dependencies only
 RUN yarn install --production && yarn cache clean
@@ -61,17 +63,20 @@ RUN yarn install --production && yarn cache clean
 # Make sure the verifier is executable
 RUN chmod +x ./dex-verifier
 
-# Create an entrypoint script that matches the README's run command
-RUN echo '#!/bin/bash\n\
-exec yarn start \
+# Create start script
+RUN echo '#!/bin/sh\n\
+./dex-verifier \
   --statement "$(cat config/statement.json)" \
   --names "$(cat config/names.json)" \
   --node "$NODE" \
-  --port "$PORT"' > /app/entrypoint.sh && \
-  chmod +x /app/entrypoint.sh
+  --port "$PORT"' > start.sh && \
+chmod +x start.sh
+
+# Update package.json to use the correct path
+RUN sed -i 's|"start": "./verifier/target/release/dex-verifier"|"start": "./dex-verifier"|' package.json
 
 # Expose the correct port as mentioned in README
 EXPOSE 8100
 
-# Use the entrypoint script
-ENTRYPOINT ["/app/entrypoint.sh"]
+# Use the start script as entrypoint
+ENTRYPOINT ["./start.sh"]
