@@ -52,7 +52,7 @@ See the [docker file](./Dockerfile) to see which environment variables can used 
 - **Demo Website**: https://concordium-dex-dapp.onrender.com 
 - **Technical Guide**: Detailed documentation covering contract architecture, functions, and implementation details can be found [here](https://docs.google.com/document/d/1nL5KqXNKekBLi0xnDV60UzySjYbcsGs0GVWIzY_g3IQ/edit?usp=sharing)
 - **Concordium Guide**: Step-by-step instructions for installing the concordium client in the [documentation](https://developer.concordium.software/en/mainnet/smart-contracts/guides/setup-tools.html)
-- **Frontend Interface**: [Simple UI for interacting with the staking contract](https://concordium-dex-dapp.onrender.com)
+- **Frontend Interface**: [Simple UI for interacting with the DEX contract](https://concordium-dex-dapp.onrender.com)
 - **Concordium Documentation:** https://developer.concordium.software/
 - **Concordium Website:** https://www.concordium.com/
 - **Concordium Support:** https://support.concordium.software/
