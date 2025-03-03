@@ -13,7 +13,7 @@ COPY tsconfig.json ./tsconfig.json
 COPY esbuild.config.ts ./
 COPY src ./src
 # Copy assets directory
-COPY assets ./assets
+COPY ./src/assets ./assets
 
 # Install dependencies and build frontend
 RUN yarn && yarn cache clean
