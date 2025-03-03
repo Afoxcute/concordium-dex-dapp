@@ -21,19 +21,22 @@ FROM ${rust_base_image} AS rust_build
 # Set up workspace for Rust build
 WORKDIR /build
 
-# Copy necessary files for verifier build
-COPY package.json yarn.lock ./
+# First, copy the SDK
 COPY deps/concordium-rust-sdk /build/deps/concordium-rust-sdk
-COPY verifier /build/verifier
 
-# Install yarn (needed for yarn build-verifier)
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+# Install required dependencies including yarn
+RUN apt-get update && \
+    apt-get install -y curl && \
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update && \
     apt-get install -y yarn
 
-# Build the verifier using yarn build-verifier
-RUN sed -i 's|../../deps/concordium-rust-sdk/|/build/deps/concordium-rust-sdk/|g' verifier/Cargo.toml
+# Copy verifier directory and package files
+COPY package.json yarn.lock ./
+COPY verifier ./verifier
+
+# No need for sed command since we're using absolute path in Cargo.toml now
 RUN yarn build-verifier
 
 # Final stage
