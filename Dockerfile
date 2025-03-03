@@ -21,13 +21,18 @@ FROM ${rust_base_image} AS rust_build
 # Set up workspace for Rust build
 WORKDIR /build
 
+# Install SSL certificates and other dependencies
+RUN apt-get update && \
+    apt-get install -y \
+    curl \
+    ca-certificates \
+    && update-ca-certificates
+
 # First, copy the SDK
 COPY deps/concordium-rust-sdk /build/deps/concordium-rust-sdk
 
-# Install required dependencies including yarn
-RUN apt-get update && \
-    apt-get install -y curl && \
-    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+# Install yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update && \
     apt-get install -y yarn
@@ -45,10 +50,18 @@ RUN mkdir -p target/release && cp target/release/dex-verifier /build/dex-verifie
 FROM ${node_base_image}
 WORKDIR /app
 
+# Install SSL certificates in the final stage
+RUN apt-get update && \
+    apt-get install -y \
+    ca-certificates \
+    && update-ca-certificates
+
 # Set default environment variables
 ENV PORT=8100
 ENV NODE=https://grpc.testnet.concordium.com:20000
 ENV LOG_LEVEL=info
+ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+ENV SSL_CERT_DIR=/etc/ssl/certs
 
 # Copy necessary files from build stages
 COPY --from=rust_build /build/dex-verifier ./dex-verifier
@@ -63,8 +76,10 @@ RUN yarn install --production && yarn cache clean
 # Make sure the verifier is executable
 RUN chmod +x ./dex-verifier
 
-# Create start script
+# Create start script with environment variables
 RUN echo '#!/bin/sh\n\
+export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt\n\
+export SSL_CERT_DIR=/etc/ssl/certs\n\
 ./dex-verifier \
   --statement "$(cat config/statement.json)" \
   --names "$(cat config/names.json)" \
