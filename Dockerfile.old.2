@@ -6,19 +6,17 @@ FROM ${node_base_image} AS node_build
 
 WORKDIR /app
 
-# Copy files needed for the build
+# Copy all source files including types
 COPY package.json ./package.json
 COPY yarn.lock ./yarn.lock
 COPY tsconfig.json ./tsconfig.json
 COPY esbuild.config.ts ./
 COPY src ./src
-# Copy existing public directory if it exists
-COPY public ./public
+# Copy assets with specific directory structure maintained
+COPY src/assets ./src/assets
 
-# Install dependencies
+# Install dependencies and build frontend
 RUN yarn && yarn cache clean
-
-# Build frontend - this will output to the public directory
 RUN yarn build
 
 # Rust build stage
@@ -34,7 +32,7 @@ RUN apt-get update && \
     ca-certificates \
     && update-ca-certificates
 
-# Copy the SDK
+# First, copy the SDK
 COPY deps/concordium-rust-sdk /build/deps/concordium-rust-sdk
 
 # Install yarn
@@ -72,7 +70,6 @@ ENV SSL_CERT_DIR=/etc/ssl/certs
 # Copy necessary files from build stages
 COPY --from=rust_build /build/dex-verifier ./dex-verifier
 COPY --from=rust_build /build/verifier/config ./config
-# Copy the entire public directory from the build stage
 COPY --from=node_build /app/public ./public
 COPY --from=node_build /app/package.json ./
 COPY --from=node_build /app/yarn.lock ./
@@ -94,7 +91,7 @@ export SSL_CERT_DIR=/etc/ssl/certs\n\
   --port "$PORT"' > start.sh && \
 chmod +x start.sh
 
-# Expose the correct port
+# Expose the correct port as mentioned in README
 EXPOSE 8100
 
 # Use the start script as entrypoint
